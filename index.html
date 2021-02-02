@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOSS直聘-找工作我要跟老板谈！招聘求职找工作！</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.png" />
+    <link rel="stylesheet" href="./style/main.css" />
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="home-header">
+        <img src="./images/home-search-text.png" alt="" />
+        <form action="">
+          <input placeholder="搜索职位/公司" type="text" name="" id="" />
+          <button type="button">搜索</button>
+        </form>
+      </div>
+      <div class="home-categories">
+        <dl v-for="item in categories">
+          <dt>
+            <img :src="item.icon" alt="" />
+            <div>{{item.name}}</div>
+          </dt>
+          <dd>
+            <a href="" class="tag" v-for="tag in item.tags">{{tag}}</a>
+          </dd>
+        </dl>
+      </div>
+      <div class="home-city-list">
+        <div class="city-title">热招城市：</div>
+        <div class="city-list">
+          <p>北京招聘</p>
+          <p>北京招聘</p>
+          <p>北京招聘</p>
+          <p>北京招聘</p>
+        </div>
+      </div>
+      <div class="home-footer">
+        <p>违法和不良信息举报邮箱：jubao@kanzhun.com</p>
+        <p>企业服务热线和举报投诉：400 065 5799</p>
+        <p>人力资源服务许可证</p>
+        <p>网上有害信息举报专区</p>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.5.0/fetch.min.js" type="module"></script>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data:{
+          categories:[]
+        },
+        created:function(){
+          //axios也可
+          const that = this //this指的是vm
+          fetch('http://127.0.0.1:5500/api/index.json')
+          .then(function (res){
+            return res.json()
+          })
+          .then(function(data){
+            // vm.categories = data
+            that.categories = data
+          })
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>「全国Java招聘」 - BOSS直聘</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.png" />
+    <link rel="stylesheet" href="./style/main.css" />
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="list-header flex">
+        <form action="" class="flex">
+          <img src="./images/icon-home.png" alt="" />
+          <div class="inner flex">
+            <input type="text" value="web前端" />
+            <span>&times;</span>
+          </div>
+          <button type="button">搜索</button>
+        </form>
+      </div>
+      <div class="filter flex">
+        <dl class="active1" v-for="item in filters">
+          <dt>{{item.name}}</dt>
+          <dd>
+            <ul>
+              <li class="active" v-for="option in item.options">{{option.text}}</li>
+            </ul>
+          </dd>
+        </dl>
+
+      </div>
+
+      <ul class="job-list">
+        <li v-for="item in jobs">
+          <a href="" class="job-item flex">
+            <img :src="item.logo" alt="" />
+            <div class="text">
+              <div class="title flex">
+                {{item.title}}
+                <span class="salary"> {{item.salary}} </span>
+              </div>
+              <div class="company">
+                {{item.company}}
+              </div>
+              <div class="props">
+                <span v-for="tag in item.tags">{{tag}}</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.5.0/fetch.min.js" type="module"></script>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data:{
+          filters:[],
+          jobs:[],
+        },
+        created:function(){
+          //axios也可
+          // const that = this //this指的是vm
+          fetch('http://127.0.0.1:5500/api/filters.json')
+          .then(function (res){
+            return res.json()
+          })
+          .then(function(data){
+            vm.filters = data
+            // that.filters = data
+          })
+
+          fetch('http://127.0.0.1:5500/api/jobs.json')
+          .then(function (res){
+            return res.json()
+          })
+          .then(function(data){
+            vm.jobs = data
+            // that.filters = data
+          })
+        }
+      });
+    </script>
+  </body>
+</html>
